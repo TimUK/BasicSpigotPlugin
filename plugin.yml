@@ -1,0 +1,9 @@
+name: BasicSpigotPlugin
+main: uk.cncmc.plugins.basic.BasicSpigotPlugin
+version: 1.0
+api-version: 1.13
+commands:
+   hellocommand:
+      description: Say hi to the server
+      usage: /hellocommand
+      permission: yourplugin.yourcommandpermission
