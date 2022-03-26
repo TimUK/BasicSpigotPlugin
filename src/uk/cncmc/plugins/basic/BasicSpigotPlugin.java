@@ -9,6 +9,9 @@ public class BasicSpigotPlugin extends JavaPlugin {
     public void onEnable() {
     	// register the command execution class
     	this.getCommand("hellocommand").setExecutor(new CmdHelloCommand());
+    	
+    	// register all the events that are setup in JoinListener class
+    	getServer().getPluginManager().registerEvents(new JoinListener(), this);
     }
     
     // Fired when plugin is disabled
