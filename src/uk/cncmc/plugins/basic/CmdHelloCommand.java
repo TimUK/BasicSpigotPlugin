@@ -4,11 +4,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class CmdHelloCommand implements CommandExecutor {
+	
+	// to access the config object we need to get the main class
+	private BasicSpigotPlugin mainClass;
+	
+	// create an object to store the config object
+	FileConfiguration config;
+	
+	public CmdHelloCommand(BasicSpigotPlugin mainClass) {
+		//main class is passed in here
+		this.mainClass = mainClass;
+		
+		// get the plugin config object
+		config = mainClass.getConfig();
+	}
 
     // This method is called, when somebody uses our command
     @Override
@@ -35,8 +50,15 @@ public class CmdHelloCommand implements CommandExecutor {
             player.setHealth(0);
         }
     	
+    	// get the value for this property
+    	int helloCount = config.getInt("helloCount");
+    	// add 1 to the value and save it
+    	config.set("helloCount", helloCount + 1);
+    	mainClass.saveConfig();
+    	
     	// this will send a message to everyone, whether the command was typed by a player or if it was typed by console
-    	Bukkit.getServer().broadcastMessage("Somebody typed /hellocommand");
+    	// show the amount of times executed and add 1
+    	Bukkit.getServer().broadcastMessage("Somebody typed /hellocommand - times typed: "+ String.valueOf((helloCount+1)));
     	
         return true;
     }
